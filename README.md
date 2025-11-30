@@ -67,7 +67,9 @@ Internal components:
 ## 📦 Project Structure
 
 project-root/
+
 ├── src/main/java/com/thousand31/taskflow
+
 │ ├── controller
 │ ├── service
 │ ├── repository
