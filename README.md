@@ -1,5 +1,5 @@
 # taskflow-automation-service
-askFlow Automation Service — A modular task scheduling and reminder backend built using Java, Spring Boot, and C4 architecture modeling.
+TaskFlow Automation Service — A modular task scheduling and reminder backend built using Java, Spring Boot, and C4 architecture modeling.
 
 # TaskFlow Automation Service  
 A modular task scheduling and reminder backend built using **Java**, **Spring Boot**, and **C4 architecture modeling**.
@@ -41,8 +41,10 @@ This project follows **C4 Architecture Modeling**:
 Shows the high-level interactions between:
 - User  
 - TaskFlow API  
-- Database  
-- Notification Service  
+- Database
+  
+<img src="diagrams/TaskFlow%20-%20Context%20Viewpoint-System%20Context%20Diagram.png" alt="Alt Text" width="600"/>
+<img src="diagrams/TaskFlow%20-%20Context%20Viewpoint-Context%20Diagram.png" alt="Alt Text" width="600"/>
 
 ### Level 2 — Container Diagram
 Key components:
@@ -50,6 +52,7 @@ Key components:
 - Scheduler Module  
 - Email/Notification Adapter  
 - Database  
+<img src="diagrams/TaskFlow%20-%20Context%20Viewpoint-Container%20Diagram.png" alt="Alt Text" width="600"/>
 
 ### Level 3 — Component Diagram
 Internal components:
