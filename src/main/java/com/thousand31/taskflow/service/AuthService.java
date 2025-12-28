@@ -2,13 +2,16 @@ package com.thousand31.taskflow.service;
 
 import com.thousand31.taskflow.config.JwtUtil;
 import com.thousand31.taskflow.dto.auth.JwtResponse;
+import com.thousand31.taskflow.dto.auth.LoginRequest;
 import com.thousand31.taskflow.dto.auth.SignupRequest;
 import com.thousand31.taskflow.model.Role;
 import com.thousand31.taskflow.model.User;
 import com.thousand31.taskflow.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -40,6 +43,19 @@ public class AuthService {
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
         String token = jwtUtil.generateToken(userDetails);
 
+        return buildJwtResponse(user, token);
+    }
+
+    public JwtResponse login(LoginRequest request){
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                request.getEmail(),
+                request.getPassword()
+        );
+        authenticationManager.authenticate(authentication);
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(()-> new IllegalArgumentException("Invalid email or password"));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
+        String token = jwtUtil.generateToken(userDetails);
         return buildJwtResponse(user, token);
     }
 
