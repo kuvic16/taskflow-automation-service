@@ -35,6 +35,7 @@ public class TaskService {
                 .dueDate(request.getDueDate())
                 .reminderTime(request.getReminderDate())
                 .status(TaskStatus.PENDING)
+                .user(user)
                 .build();
         Task saved = taskRepository.save(task);
         return mapToResponse(saved);
