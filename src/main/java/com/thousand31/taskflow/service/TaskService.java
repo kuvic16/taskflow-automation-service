@@ -2,6 +2,7 @@ package com.thousand31.taskflow.service;
 
 import com.thousand31.taskflow.dto.task.TaskRequest;
 import com.thousand31.taskflow.dto.task.TaskResponse;
+import com.thousand31.taskflow.exception.ResourceNotFoundException;
 import com.thousand31.taskflow.model.Task;
 import com.thousand31.taskflow.model.TaskStatus;
 import com.thousand31.taskflow.model.User;
@@ -24,7 +25,7 @@ public class TaskService {
                 .getAuthentication()
                 .getName();
         return userRepository.findByEmail(email)
-                .orElseThrow(()->new RuntimeException("User not found"));
+                .orElseThrow(()->new ResourceNotFoundException("User not found"));
     }
 
     public TaskResponse createTask(TaskRequest request){
@@ -52,14 +53,14 @@ public class TaskService {
     public TaskResponse getTaskById(Long id) {
         User user = getCurrentUser();
         Task task = taskRepository.findByIdAndUser(id, user)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
         return mapToResponse(task);
     }
 
     public TaskResponse updateTask(Long id, TaskRequest request){
         User user = getCurrentUser();
         Task task = taskRepository.findByIdAndUser(id, user)
-                .orElseThrow(()-> new RuntimeException("Task not found"));
+                .orElseThrow(()-> new ResourceNotFoundException("Task not found"));
 
         task.setTitle(request.getTitle());
         task.setDescription(request.getDescription());
@@ -73,7 +74,7 @@ public class TaskService {
         User user = getCurrentUser();
 
         Task task = taskRepository.findByIdAndUser(id, user)
-                .orElseThrow(()->new RuntimeException("Task not found"));
+                .orElseThrow(()->new ResourceNotFoundException("Task not found"));
 
         taskRepository.delete(task);
     }

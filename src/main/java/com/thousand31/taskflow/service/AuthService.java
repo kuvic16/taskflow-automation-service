@@ -4,6 +4,7 @@ import com.thousand31.taskflow.config.JwtUtil;
 import com.thousand31.taskflow.dto.auth.JwtResponse;
 import com.thousand31.taskflow.dto.auth.LoginRequest;
 import com.thousand31.taskflow.dto.auth.SignupRequest;
+import com.thousand31.taskflow.exception.BadRequestException;
 import com.thousand31.taskflow.model.Role;
 import com.thousand31.taskflow.model.User;
 import com.thousand31.taskflow.repository.UserRepository;
@@ -53,7 +54,7 @@ public class AuthService {
         );
         authenticationManager.authenticate(authentication);
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(()-> new IllegalArgumentException("Invalid email or password"));
+                .orElseThrow(()-> new BadRequestException("Invalid email or password"));
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
         String token = jwtUtil.generateToken(userDetails);
         return buildJwtResponse(user, token);
