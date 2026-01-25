@@ -4,6 +4,7 @@ import com.thousand31.taskflow.dto.auth.JwtResponse;
 import com.thousand31.taskflow.dto.auth.LoginRequest;
 import com.thousand31.taskflow.dto.auth.SignupRequest;
 import com.thousand31.taskflow.service.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final AuthService authService;
 
+    @Operation(summary = "User signup", security = {})
     @PostMapping("/signup")
     public ResponseEntity<JwtResponse> register(@Valid @RequestBody SignupRequest request){
         JwtResponse response = authService.register(request);
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "User login", security = {})
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(@Valid @RequestBody LoginRequest loginRequest){
         JwtResponse response = authService.login(loginRequest);
